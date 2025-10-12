@@ -3,6 +3,7 @@
 .controls-btn {
   padding: 7px 12px;
   border-radius: 8px;
+  background:transparent ;
   font-family: var(--mono);
   cursor: pointer;
   border: 1px solid var(--text);

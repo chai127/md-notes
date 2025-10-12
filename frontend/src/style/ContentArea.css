@@ -1,4 +1,5 @@
 .controls-btn {
+  background: transparent;
   padding: 7px 12px;
   border-radius: 8px;
   font-family: var(--mono);
