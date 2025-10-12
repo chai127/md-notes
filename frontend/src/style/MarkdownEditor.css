@@ -1,0 +1,59 @@
+.md-modal-overlay {
+  position: fixed;
+  inset: 0;
+  /* background: rgba(0,0,0,0.7); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.md-modal {
+  width: 80%;
+  height: 80%;
+  background: var(--bg);
+  border: 1px solid var(--text);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.md-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--text);
+}
+.editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+}
+.editor-text {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 1rem;
+  /* background: #161b22; */
+  /* color: var(--fg); */
+  font-family: monospace;
+  resize: none;
+}
+.preview {
+  padding: 1rem;
+  overflow-y: auto;
+}
+.save-btn {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+}
+
+.md-actions button {
+    margin-left: 8px;   
+    padding: 6px 12px;
+    border: 1px solid var(--text);
+    border-radius: 6px;
+    cursor: pointer;  
+}
+

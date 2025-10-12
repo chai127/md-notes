@@ -1,0 +1,13 @@
+
+/* Common button styles */
+.controls-btn {
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  cursor: pointer;
+  border: 1px solid var(--text);
+  color: var(--text);
+}
+.controls-btn:hover {
+  opacity: 0.9;
+}

@@ -36,16 +36,26 @@ export default function TopicsPage() {
 
 
   const addTopic = (event) => {
-   
+    if (event && event.preventDefault) event.preventDefault();
+    const name = newTopicText.trim();
+    if (!name) return;
+
+    const newTopic = {
+      _id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      name,
+    };
+
+    setTopics((prev) => [newTopic, ...prev]);
+    setNewTopicText("");
   };
 
   const updateTopic = (topicId, newName) => {
-   
+    setTopics((prev) => prev.map((t) => (t._id === topicId ? { ...t, name: newName } : t)));
   };
 
 
   const deleteTopic = (topicId) => {
-   
+    setTopics((prev) => prev.filter((t) => t._id !== topicId));
   };
 
   return (

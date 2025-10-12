@@ -1,0 +1,12 @@
+.controls-btn {
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  cursor: pointer;
+}
+
+.controls-btn.primary {
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  color: #05232a;
+  border: none;
+}
