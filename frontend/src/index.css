@@ -1,0 +1,70 @@
+:root{
+  --mono: "Fira Code", "JetBrains Mono", "SFMono-Regular", ui-monospace, SFMono, Menlo, Monaco, "Roboto Mono", monospace;
+}
+
+body.dark {
+  --bg:#0b0f12;
+  --panel:#0f1417;
+  --muted:#95a1a8;
+  --accent:#7dd3fc;
+  --accent-2:#60a5fa;
+  /* --text:#e6eef3; */
+  --text:#fffffff3;
+  --glass: rgba(255,255,255,0.03);
+}
+
+body.light {
+  --bg: #f4f8fb;
+  --panel: #ffffff;
+  --muted: #8a8a8a;
+  --accent: #00bcd4;
+  --accent-2: #2196f3;
+  --text: #212121;
+  --glass: rgba(2, 6, 8, 0.1);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,body{height:100%}
+body {
+  margin: 0;
+  /* font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; */
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 28px auto;
+  padding: 0 20px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+@media screen and (max-width: 768px) {
+  .main-grid {
+    grid-template-columns: 1fr; 
+    gap: 16px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0 12px;
+  }
+}

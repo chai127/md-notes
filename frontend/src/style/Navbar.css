@@ -1,0 +1,140 @@
+
+.site-header {
+  font-family: var(--mono);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--glass);
+  box-shadow: 2px 2px 15px var(--glass);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.hamburger .bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text);
+  border-radius: 3px;
+}
+
+.nav-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text);
+  padding: 6px 10px;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+.nav-link.active {
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent-2);
+}
+
+.controls .controls-btn {
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 7px;
+    font-family: var(--mono);
+    cursor: pointer;
+}
+
+body.light .controls .controls-btn {
+  border: 1px solid rgba(44, 43, 43, 0.5);
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-bottom: 0;
+    z-index: 10; 
+  }
+
+  .nav-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    background-color: var(--bg);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 1rem 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .navbar.open .nav-content {
+    display: flex;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .nav-link {
+    font-size: 15px;
+  }
+
+  .controls .controls-btn {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+  .nav-link {
+    font-size: 14px;
+  }
+
+  .controls .controls-btn {
+    font-size: 13px;
+    padding: 4px 6px;
+  }
+}
