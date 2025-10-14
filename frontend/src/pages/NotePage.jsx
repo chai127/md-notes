@@ -1,91 +1,110 @@
 import React, { useState, useEffect } from 'react';
-import { topicsData } from '../data/topicsData';
-import MarkdownEditor from '../components/MarkdownEditor';
-import { convertTopicToMarkdown } from '../utlis/markdownUtils';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getTopics } from '../utlis/api';
+import ContentArea from '../components/ContentArea';
+import TopicForm from '../components/TopicsPage/TopicForm';
 import '../style/NotePage.css';
 import '../style/components.css';
 
 export default function NotePage() {
+  const { topicId } = useParams();
+  const navigate = useNavigate();
+  
+  const [topics, setTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
-  const [isEditorOpen, setIsEditorOpen] = useState(false);
-  const [markdown, setMarkdown] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Fetch topics when component mounts
   useEffect(() => {
-    document.title = selectedTopic
-      ? `${selectedTopic.name} — C++ Notes`
-      : 'Bare Minimum — C++ Notes';
-  }, [selectedTopic]);
+    fetchTopics();
+  }, []);
+
+  // Update selected topic when URL changes or topics are loaded
+  useEffect(() => {
+    if (topics.length > 0 && topicId) {
+      const topic = topics.find(t => t._id === topicId);
+      if (topic) {
+        setSelectedTopic(topic);
+        setError(null);
+      } else {
+        setSelectedTopic(null);
+        setError('Topic not found');
+      }
+    } else if (!topicId) {
+      setSelectedTopic(null);
+      setError(null);
+    }
+  }, [topics, topicId]);
+
+  const fetchTopics = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getTopics();
+      setTopics(response.data);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch topics');
+      console.error('Error fetching topics:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSelectTopic = (topic) => {
-    setSelectedTopic(topic);
+    navigate(`/notes/${topic._id}`);
   };
 
-  const openEditor = () => {
-    if (!selectedTopic) return;
-    setMarkdown(convertTopicToMarkdown(selectedTopic));
-    setIsEditorOpen(true);
-  };
+const handleTopicCreated = async (newTopic) => {
+  try {
+    await fetchTopics();
+    const latestTopic = topics.find(t => t._id === newTopic._id) || newTopic;
+    setSelectedTopic(latestTopic);
+    navigate(`/notes/${latestTopic._id}`);
+  } catch (err) {
+    setError('Failed to update topics after creation');
+    console.error('Error after topic creation:', err);
+  }
+};
 
   return (
     <main className="main-grid">
-      {/* Sidebar — TOC */}
       <aside className="sidebar">
         <header>
-          <h2>Contents</h2>
+          <h2>Topics</h2>
         </header>
-        <ul className="toc-list">
-          {topicsData.map(topic => (
-            <li key={topic._id}>
-              <button
-                className={`toc-btn ${selectedTopic?._id === topic._id ? 'active' : ''}`}
-                onClick={() => handleSelectTopic(topic)}
-              >
-                {topic.name}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <TopicForm onTopicCreated={handleTopicCreated} />
+        
+        {isLoading ? (
+          <div className="loading">Loading topics...</div>
+        ) : error ? (
+          <div className="error-message">{error}</div>
+        ) : (
+          <nav>
+            <ul className="toc-list">
+              {topics.map(topic => (
+                <li key={topic._id}>
+                  <button
+                    className={`toc-btn ${selectedTopic?._id === topic._id ? 'active' : ''}`}
+                    onClick={() => handleSelectTopic(topic)}
+                  >
+                    {topic.name}
+                  </button>
+                </li>
+              ))}
+              {topics.length === 0 && (
+                <li className="empty-state">No topics yet. Create your first topic to get started!</li>
+              )}
+            </ul>
+          </nav>
+        )}
       </aside>
 
-      {/* Main Content */}
-      <section className="content-area">
-        {selectedTopic ? (
-          <>
-            <header className="note-header">
-              <h1>{selectedTopic.name}</h1>
-              <button className="controls-btn primary" onClick={openEditor}>
-                Convert
-              </button>
-            </header>
-
-            <hr className="divider" />
-
-            {selectedTopic.notes.length > 0 ? (
-              selectedTopic.notes.map((note) => (
-                <article key={note._id} className="note">
-                  <h3>{note.title}</h3>
-                  <p>{note.content}</p>
-                </article>
-              ))
-            ) : (
-              <p className="empty">No notes yet.</p>
-            )}
-          </>
-        ) : (
-          <p className="welcome">Select a topic from the left to view it here.</p>
-        )}
-      </section>
-
-      {isEditorOpen && (
-        <MarkdownEditor
-          initialValue={markdown}
-          onClose={() => setIsEditorOpen(false)}
-          onSave={(newMd) => {
-            setMarkdown(newMd);
-            setIsEditorOpen(false);
-          }}
-        />
-      )}
+      {/* Main Content Area */}
+      <ContentArea 
+        topic={selectedTopic}
+        onNoteChange={fetchTopics}
+      />
     </main>
   );
 }

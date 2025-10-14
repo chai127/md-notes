@@ -1,0 +1,103 @@
+@import './variables.css';
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg-primary);
+}
+
+/* Global Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Global Link Styles */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Global Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Global Form Elements */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  background: var(--bg-primary);
+  color: var(--text);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-transparent);
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-muted { color: var(--text-muted); }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+/* Accessibility */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: #fff;
+  }
+  
+  .no-print {
+    display: none;
+  }
+}
