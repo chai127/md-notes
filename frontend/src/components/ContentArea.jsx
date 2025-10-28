@@ -9,6 +9,7 @@ const ContentArea = ({ topic, onNoteChange }) => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [notes, setNotes] = useState([]);
     const [selectedNote, setSelectedNote] = useState(null);
+    const [fullViewNote, setFullViewNote] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     
@@ -155,10 +156,17 @@ const ContentArea = ({ topic, onNoteChange }) => {
                                 <div
                                     className="note-content markdown-body"
                                     dangerouslySetInnerHTML={{
-                                        __html: marked(note.content)
+                                        __html: marked(note.content.split('\n').slice(0, 5).join('\n') + (note.content.split('\n').length > 5 ? '\n...' : ''))
                                     }}
                                 />
                                 <div className="note-actions">
+                                    <button
+                                        className="open-btn"
+                                        onClick={() => setFullViewNote(note)}
+                                        title="Open note"
+                                    >
+                                        Open
+                                    </button>
                                     <button
                                         className="edit-btn"
                                         onClick={() => openEditor(note)}
@@ -186,6 +194,42 @@ const ContentArea = ({ topic, onNoteChange }) => {
                     onClose={closeEditor}
                     onSave={handleSave}
                 />
+            )}
+            
+            {fullViewNote && (
+                <div className="md-modal-overlay">
+                    <div className="md-modal">
+                        <header className="md-header">
+                            <h3>View Note</h3>
+                            <div className="md-actions">
+                                <button 
+                                    className="edit-btn"
+                                    onClick={() => {
+                                        openEditor(fullViewNote);
+                                        setFullViewNote(null);
+                                    }}
+                                >
+                                    Edit
+                                </button>
+                                <button 
+                                    className="close-btn"
+                                    onClick={() => setFullViewNote(null)}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </header>
+                        <div className="editor-grid">
+                            <div className="preview-content markdown-body">
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: marked(fullViewNote.content)
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
         </section>
     );

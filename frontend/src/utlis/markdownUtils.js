@@ -35,13 +35,38 @@ export function convertPlainTextToMarkdown(text) {
       continue;
     }
 
-    // Bold / italic markers
+    // Bold / italic / color markers
     if (trimmed.startsWith('!')) {
       result.push(`**${trimmed.substring(1)}**`);
       continue;
     }
     if (trimmed.startsWith('@')) {
       result.push(`*${trimmed.substring(1)}*`);
+      continue;
+    }
+    // Process inline color tags
+    let processedLine = trimmed;
+    
+    // Process pink color
+    processedLine = processedLine.replace(
+      /#p\{([^}]+)\}/g,
+      '<span class="color-pink">$1</span>'
+    );
+    
+    // Process blue color
+    processedLine = processedLine.replace(
+      /#b\{([^}]+)\}/g,
+      '<span class="color-blue">$1</span>'
+    );
+    
+    // Process green color
+    processedLine = processedLine.replace(
+      /#g\{([^}]+)\}/g,
+      '<span class="color-green">$1</span>'
+    );
+    
+    if (processedLine !== trimmed) {
+      result.push(processedLine);
       continue;
     }
 

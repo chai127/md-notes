@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { marked } from 'marked';
+
+// Configure marked to allow HTML
+marked.setOptions({
+  headerIds: false,
+  mangle: false,
+  breaks: true,
+});
 import { convertPlainTextToMarkdown, convertMarkdownToPlainText } from '../utlis/markdownUtils';
 import '../style/MarkdownEditor.css';
 
@@ -161,6 +168,13 @@ Quick Tips:
 - First non-empty line becomes a heading
 - Separate paragraphs with blank lines
 - 4-space indent or triple backticks (\`\`\`) creates code blocks
+
+Color Shortcuts:
+- Use #{} for colored text:
+  #p{This text will be pink}
+  #b{This text will be blue}
+  #g{This text will be green}
+- You can use colors inline like: Normal text with #b{blue highlight} and back to normal
 
 Line Shortcuts:
 - Ctrl/Cmd + L → Insert solid line (─────)

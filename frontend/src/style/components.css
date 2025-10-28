@@ -185,7 +185,7 @@
 }
 
 /* Button Variants */
-.edit-btn, .delete-btn {
+.edit-btn, .delete-btn, .open-btn {
   padding: 0.375rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -200,6 +200,15 @@
 
 .delete-btn {
   color: var(--error);
+}
+
+.open-btn {
+  color: var(--text);
+}
+
+.open-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-dark);
 }
 
 .edit-btn:hover {
