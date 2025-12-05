@@ -22,6 +22,27 @@
   animation: modal-appear 0.3s ease-out;
 }
 
+/* Custom scrollbar styling */
+.md-modal ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.md-modal ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.md-modal ::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 4px;
+  transition: background var(--transition-speed);
+}
+
+.md-modal ::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
 @keyframes modal-appear {
   from {
     opacity: 0;
@@ -51,6 +72,13 @@
   flex: 1;
   background: var(--border);
   overflow: hidden;
+}
+
+.preview-content {
+  padding: var(--spacing-md);
+  overflow-y: auto;
+  height: 100%;
+  background: var(--bg-primary);
 }
 
 .editor-container
